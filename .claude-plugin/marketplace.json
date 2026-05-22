@@ -1,0 +1,6 @@
+{
+  "name": "claude_plugin",
+  "plugins": [
+    { "name": "common", "source": "./plugins/common" }
+  ]
+}
