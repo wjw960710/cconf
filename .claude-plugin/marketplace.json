@@ -1,5 +1,8 @@
 {
   "name": "claude_plugin",
+  "owner": {
+    "name": "wjw960710"
+  },
   "plugins": [
     { "name": "common", "source": "./plugins/common" }
   ]
