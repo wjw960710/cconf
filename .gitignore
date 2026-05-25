@@ -1,2 +1,7 @@
 # Jetbrains
 .idea
+
+# AI
+.claude/settings.local.json
+.claude/tmp/
+CLAUDE.local.md
