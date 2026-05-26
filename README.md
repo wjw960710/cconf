@@ -7,7 +7,7 @@
 
 ```shell
 claude
-/plugin marketplace add D:\claude_config
+/plugin marketplace add D:\cconf
 ```
 
 > 安裝專案並配置與分發 AI 配置到各專案

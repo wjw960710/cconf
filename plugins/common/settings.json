@@ -2,8 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(npx tsx *)",
-			"Bash(node ~/.ccwjw/*-scripts/**/*.js)",
-			"Bash(node ~/.ccwjw/*-scripts/**/*.js *)"
+			"Bash(node ~/.cconf/*-scripts/**/*.js)",
+			"Bash(node ~/.cconf/*-scripts/**/*.js *)"
     ]
   }
 }

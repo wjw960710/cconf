@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ~/.ccwjw/common-scripts/hello-world/run.js",
+            "command": "node ~/.cconf/common-scripts/hello-world/run.js",
             "timeout": 120,
             "statusMessage": "運行 hello-world 腳本"
           }

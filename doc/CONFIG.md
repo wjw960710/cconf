@@ -3,13 +3,13 @@
 ```json
 {
   "enabledPlugins": {
-    "common@claude_config": true
+    "common@cconf": true
   },
   "extraKnownMarketplaces": {
-    "claude_config": {
+    "cconf": {
       "source": {
         "source": "directory",
-        "path": "D:\\claude_config"
+        "path": "D:\\cconf"
       }
     }
   }
@@ -19,6 +19,6 @@
 接著在專案的 calude 裡輸入以下後重啟 claude
 
 ```shell
-/plugin marketplace add D:\claude_config
-/plugin install common@claude_config
+/plugin marketplace add D:\cconf
+/plugin install common@cconf
 ```

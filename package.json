@@ -1,5 +1,5 @@
 {
-  "name": "claude_config",
+  "name": "cconf",
   "version": "1.0.0",
   "type": "module",
   "bin": {

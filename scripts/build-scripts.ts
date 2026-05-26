@@ -8,7 +8,7 @@ import { rolldown } from 'rolldown'
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const pluginsDir = join(root, 'plugins')
 const nodeModulesDir = join(root, 'node_modules')
-const distRoot = join(homedir(), '.ccwjw')
+const distRoot = join(homedir(), '.cconf')
 
 async function walkTs(dir: string): Promise<string[]> {
 	const out: string[] = []
