@@ -20,7 +20,7 @@
 - `scripts/` — TypeScript 腳本，提供 `cc` 各子指令的實作。
   - 查看 / 修改本目錄下任一腳本前，先讀 `scripts/CATALOG.md`（總覽索引）快速定位；需要詳細說明再讀該腳本的同名 `.md`（例：`build-claude.ts` ↔ `build-claude.md`，`lib/env.js` ↔ `lib/env.md`）。
   - **同步規則**：每個 `.ts` / `.js` 都對應一份同名 `.md`（型別宣告檔 `*.d.ts` 除外）。新增 / 重命名 / 刪除腳本時，必須同步建立 / 改名 / 刪除對應的 `.md` 並更新 `CATALOG.md`；修改腳本邏輯時也需同步更新對應 `.md`，確保描述與實作一致。
-- `plugins/` — Claude Code plugin 來源，依專案分組（`common`、`player`、...）
+- `plugins/` — Claude Code plugin 來源，依專案分組（`common`、`project`、...）
   - `scripts/` — plugin 專屬腳本一律使用 ts 寫在該目錄
 - `.env` / `.env.local` — 環境變數設定
 - `README.md` — 用戶的使用說明
