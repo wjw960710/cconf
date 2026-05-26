@@ -1,4 +1,5 @@
 import { spawn, spawnSync } from 'node:child_process'
+import { existsSync, statSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { loadEnv } from './lib/env.js'
@@ -7,17 +8,22 @@ loadEnv('open')
 
 const selfRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const isWindows = process.platform === 'win32'
-const editors = (process.env.OPEN_EDITOR ?? 'webstorm>idea>code')
-	.split('>')
-	.map((e) => e.trim())
-	.filter(Boolean)
+
+function parseEditors(value: string | undefined): string[] {
+	return (value ?? 'webstorm>idea>code')
+		.split('>')
+		.map((e) => e.trim())
+		.filter(Boolean)
+}
 
 const argv = process.argv.slice(2)
 const newWindow = argv.includes('--new') || argv.includes('-n')
 const target = (argv.find((a) => !a.startsWith('-')) ?? '').trim().toLowerCase()
 
-function resolveTargetPath(): string {
-	if (!target || target === 'ai') return selfRoot
+function resolveTarget(): { path: string; editors: string[] } {
+	if (!target || target === 'ai') {
+		return { path: selfRoot, editors: parseEditors(process.env.OPEN_EDITOR) }
+	}
 
 	const candidates = Object.keys(process.env)
 		.filter((k) => k.endsWith('_DIR_PATH'))
@@ -33,15 +39,21 @@ function resolveTargetPath(): string {
 		process.exit(1)
 	}
 
-	const path = process.env[candidates[0].envKey]
+	const { name, envKey } = candidates[0]
+	const path = process.env[envKey]
 	if (!path) {
-		console.error(`[open] ${candidates[0].envKey} is empty`)
+		console.error(`[open] ${envKey} is empty`)
 		process.exit(1)
 	}
-	return path
+	if (!existsSync(path) || !statSync(path).isDirectory()) {
+		console.error(`[open] ${envKey} 目錄不存在: ${path}`)
+		process.exit(1)
+	}
+	const projectEditor = process.env[`${name.toUpperCase()}_OPEN_EDITOR`]?.trim()
+	return { path, editors: parseEditors(projectEditor || process.env.OPEN_EDITOR) }
 }
 
-const openPath = resolveTargetPath()
+const { path: openPath, editors } = resolveTarget()
 
 function exists(cmd: string): boolean {
 	const probe = isWindows ? 'where' : 'which'

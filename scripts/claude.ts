@@ -1,4 +1,5 @@
 import { spawnSync } from 'node:child_process'
+import { existsSync, statSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { loadEnv } from './lib/env.js'
@@ -39,6 +40,10 @@ function resolveTargetPath(target: string): string {
 	const path = process.env[candidates[0].envKey]
 	if (!path) {
 		console.error(`[claude] ${candidates[0].envKey} is empty`)
+		process.exit(1)
+	}
+	if (!existsSync(path) || !statSync(path).isDirectory()) {
+		console.error(`[claude] ${candidates[0].envKey} 目錄不存在: ${path}`)
 		process.exit(1)
 	}
 	return path
