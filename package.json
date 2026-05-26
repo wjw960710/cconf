@@ -1,0 +1,23 @@
+{
+  "name": "claude_config",
+  "version": "1.0.0",
+  "type": "module",
+  "bin": {
+    "cc": "./bin/cc.mjs"
+  },
+  "scripts": {
+    "update": "tsx scripts/update.ts",
+    "deps": "pnpm install",
+    "deploy": "tsx scripts/build-all.ts",
+    "link": "pnpm link --global",
+    "unlink": "pnpm unlink --global",
+    "open": "tsx scripts/open.ts",
+    "claude": "tsx scripts/claude.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "rolldown": "^1.0.0",
+    "tsx": "^4.22.3",
+    "typescript": "^6.0.3"
+  }
+}

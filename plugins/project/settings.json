@@ -1,0 +1,6 @@
+{
+  "enabledPlugins": {
+    "common@claude_config": true,
+    "project@claude_config": true
+  }
+}

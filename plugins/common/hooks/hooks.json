@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-hooks.json",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ~/.ccwjw/common-scripts/hello-world/run.js",
+            "timeout": 120,
+            "statusMessage": "運行 hello-world 腳本"
+          }
+        ]
+      }
+    ]
+  }
+}

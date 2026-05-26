@@ -5,3 +5,9 @@
 .claude/settings.local.json
 .claude/tmp/
 CLAUDE.local.md
+
+# js
+node_modules
+
+# project
+.env.local

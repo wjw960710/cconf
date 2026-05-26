@@ -1,5 +1,6 @@
 {
-  "name": "claude_plugin",
+  "$schema": "https://json.schemastore.org/claude-code-marketplace-manifest.json",
+  "name": "claude_config",
   "owner": {
     "name": "wjw960710"
   },
