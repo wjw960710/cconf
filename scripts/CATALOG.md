@@ -12,5 +12,5 @@ scripts 目錄
 - [`git-pull.ts`](./git-pull.md) — 以 token 認證 pull 本專案，回報是否有 scripts 變動（透過 exit code）。
 - [`update.ts`](./update.md) — `cc update` 主流程：git-pull → deps → deploy。
 - [`open.ts`](./open.md) — 以指定編輯器開啟專案目錄，支援多 editor fallback。
-- [`lib/env.js`](./lib/env.md) — `.env` / `.env.local` 載入封裝（`loadEnv(prefix?)`）。
+- [`lib/env.js`](./lib/env.md) — `.env*` 多層載入封裝（`loadEnv({ prefix?, mode? })`，mode 啟用 4 層 Vite/Next 慣例；全鏈路只讀取一次）。
 - [`lib/exit-codes.ts`](./lib/exit-codes.md) — `scripts/` 之間共用的 exit code 常數定義。

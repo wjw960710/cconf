@@ -22,7 +22,7 @@
   - **同步規則**：每個 `.ts` / `.js` 都對應一份同名 `.md`（型別宣告檔 `*.d.ts` 除外）。新增 / 重命名 / 刪除腳本時，必須同步建立 / 改名 / 刪除對應的 `.md` 並更新 `CATALOG.md`；修改腳本邏輯時也需同步更新對應 `.md`，確保描述與實作一致。
 - `plugins/` — Claude Code plugin 來源，依專案分組（`common`、`project`、...）
   - `scripts/` — plugin 專屬腳本一律使用 ts 寫在該目錄
-- `.env` / `.env.local` — 環境變數設定
+- `.env*` — 環境變數設定
 - `README.md` — 用戶的使用說明
 
 ## cc scripts 及 Plugin scripts package 安裝規則
@@ -45,7 +45,7 @@ const PROJECT_ROOT = process.env.CLAUDE_PROJECT_DIR ?? process.cwd()
 ## 用戶提示詞慣例
 
 - **「查看專案 `<project_name>`」**：當用戶提示詞中出現此語句時，需同時查看以下兩處：
-  1. `.env.local` 中 `<PROJECT_NAME>_DIR_PATH` 對應的實際專案目錄（`<PROJECT_NAME>` 為 `<project_name>` 的大寫）。
+  1. `.env.development.local` 中 `<PROJECT_NAME>_DIR_PATH` 對應的實際專案目錄（`<PROJECT_NAME>` 為 `<project_name>` 的大寫）。
   2. 本專案 `plugins/<project_name>/` 下的 AI 配置檔（plugin、command、skill、hook 等）。
 
 ## Plugin 內部與跨 plugin 引用規則

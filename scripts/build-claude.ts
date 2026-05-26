@@ -9,7 +9,7 @@ const pluginsDir = join(root, 'plugins')
 
 const supportedExts = ['.json', '.md']
 
-loadEnv('build-claude')
+loadEnv({ prefix: 'build-claude' })
 
 function isPlainObject(v: unknown): v is Record<string, unknown> {
 	return typeof v === 'object' && v !== null && !Array.isArray(v)

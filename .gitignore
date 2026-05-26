@@ -10,4 +10,4 @@ CLAUDE.local.md
 node_modules
 
 # project
-.env.local
+*.local

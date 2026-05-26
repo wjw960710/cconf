@@ -6,7 +6,7 @@ import { EXIT_NO_NEW_COMMITS, EXIT_NO_SCRIPTS_CHANGE } from './lib/exit-codes.js
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 
-loadEnv('git-pull')
+loadEnv({ prefix: 'git-pull' })
 
 const token = process.env.GIT_TOKEN?.trim()
 if (!token) {
