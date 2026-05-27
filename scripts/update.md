@@ -1,7 +1,7 @@
 update.ts
 ===
 
-`dac update` 主流程：拉取最新程式碼 → 安裝依賴 → 重新部署，串連 `git-pull.ts`、`pnpm run deps`、`pnpm run deploy`。
+`ccf update` 主流程：拉取最新程式碼 → 安裝依賴 → 重新部署，串連 `git-pull.ts`、`pnpm run deps`、`pnpm run deploy`。
 
 - 步驟 1：`tsx scripts/git-pull.ts`
   - exit `EXIT_NO_NEW_COMMITS` (10) → 沒有新 commit，整個 update 結束（exit 0）。
