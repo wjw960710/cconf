@@ -34,7 +34,11 @@ for (const plugin of plugins) {
 	await rm(outDir, { recursive: true, force: true })
 	await mkdir(outDir, { recursive: true })
 	await writeFile(join(outDir, 'package.json'), `${JSON.stringify({ type: 'module' }, null, 2)}\n`)
-	await symlink(nodeModulesDir, join(outDir, 'node_modules'), 'junction')
+	await symlink(
+		nodeModulesDir,
+		join(outDir, 'node_modules'),
+		process.platform === 'win32' ? 'junction' : 'dir',
+	)
 
 	for (const file of files) {
 		const rel = relative(scriptsDir, file).replace(/\.ts$/, '.js')
