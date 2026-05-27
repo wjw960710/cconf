@@ -2,7 +2,7 @@ import { spawnSync } from 'node:child_process'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { loadEnv } from './lib/env.js'
-import { EXIT_NO_NEW_COMMITS, EXIT_NO_SCRIPTS_CHANGE } from './lib/exit-codes.js'
+import { EXIT_NO_NEW_COMMITS } from './lib/exit-codes.js'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 
@@ -81,20 +81,5 @@ if (afterSha === beforeSha) {
 	process.exit(EXIT_NO_NEW_COMMITS)
 }
 
-const diffRes = git(['diff', '--name-only', `${beforeSha}..${afterSha}`], { capture: true })
-if (diffRes.status !== 0) {
-	console.log('[git-pull] cannot diff changed files, skip deploy to be safe')
-	process.exit(EXIT_NO_SCRIPTS_CHANGE)
-}
-const pluginScriptsRe = /^plugins\/[^/]+\/scripts\//
-const changed = diffRes.stdout
-	?.split('\n')
-	.map((l) => l.trim())
-	.filter((l) => l && (l.startsWith('scripts/') || pluginScriptsRe.test(l)))
-	.join('\n')
-if (!changed) {
-	console.log('[git-pull] new commits pulled, but no changes under scripts/ or plugins/*/scripts/')
-	process.exit(EXIT_NO_SCRIPTS_CHANGE)
-}
-console.log(`[git-pull] new commits pulled, scripts changed:\n${changed}`)
+console.log('[git-pull] new commits pulled')
 process.exit(0)

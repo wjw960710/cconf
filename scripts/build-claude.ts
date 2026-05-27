@@ -41,14 +41,23 @@ async function listTopFiles(dir: string): Promise<{ name: string, path: string, 
 	return out
 }
 
+const allDirs = (await readdir(pluginsDir, { withFileTypes: true }))
+	.filter(e => e.isDirectory())
+	.map(e => e.name)
+
+const commonDirs = allDirs.filter(name => name.startsWith('common')).sort()
+
 const commonJsonByName = new Map<string, unknown>()
-for (const f of await listTopFiles(join(pluginsDir, 'common'))) {
-	if (f.ext === '.json') commonJsonByName.set(f.name, JSON.parse(await readFile(f.path, 'utf8')))
+for (const dir of commonDirs) {
+	for (const f of await listTopFiles(join(pluginsDir, dir))) {
+		if (f.ext !== '.json') continue
+		const next = JSON.parse(await readFile(f.path, 'utf8'))
+		const prev = commonJsonByName.get(f.name)
+		commonJsonByName.set(f.name, prev === undefined ? next : deepMerge(prev, next))
+	}
 }
 
-const plugins = (await readdir(pluginsDir, { withFileTypes: true }))
-	.filter(e => e.isDirectory() && e.name !== 'common')
-	.map(e => e.name)
+const plugins = allDirs.filter(name => !name.startsWith('common'))
 
 let written = 0
 for (const plugin of plugins) {
