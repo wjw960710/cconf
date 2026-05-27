@@ -12,7 +12,8 @@
     "link": "pnpm link --global && pnpm link --global",
     "unlink": "pnpm rm -g cconf",
     "open": "tsx scripts/open.ts",
-    "claude": "tsx scripts/claude.ts"
+    "claude-cli": "tsx scripts/claude-cli.ts",
+    "claude-desktop": "tsx scripts/claude-desktop.ts"
   },
   "devDependencies": {
     "@types/node": "^25.9.1",

@@ -13,7 +13,10 @@ const openApps = ['ai', ...Object.keys(process.env)
 const commands = {
 	update: { alias: 'up', desc: '更新該專案與關聯專案的所有 AI 配置' },
 	install: { alias: 'i', desc: '安裝相依套件', run: args => run('pnpm', ['run', 'deps', ...args]) },
-	deploy: { desc: '部屬 AI 配置到各專案' },
+	deploy: {
+		alias: 'd',
+		desc: '部屬 AI 配置到各專案',
+	},
 	unlink: { desc: '移除 ccf 全域捷徑' },
 	open: {
 		alias: 'o',
@@ -23,13 +26,20 @@ const commands = {
 			`  可用專案 (startsWith 匹配，ai=本專案): ${openApps.join(' | ')}`,
 		].join('\n'),
 	},
-	claude: {
+	'claude-cli': {
 		alias: 'cc',
 		desc: [
-			'管理 Claude Code',
+			'管理 Claude Code CLI',
 			'  update                更新 Claude Code (winget upgrade Anthropic.ClaudeCode)',
 			'  <project> [args...]   cd 到 <PROJECT>_DIR_PATH 後執行 claude [args...]',
 			`  可用專案 (startsWith 匹配，ai=本專案): ${openApps.join(' | ')}`,
+		].join('\n'),
+	},
+	'claude-desktop': {
+		alias: 'cd',
+		desc: [
+			'啟動 Claude Desktop 桌面應用 (Windows)',
+			'  [args...]             透傳參數給 claude.exe',
 		].join('\n'),
 	},
 }

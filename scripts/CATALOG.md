@@ -8,7 +8,8 @@ scripts 目錄
 - [`build-all.ts`](./build-all.md) — 並行執行所有 build 腳本（目前涵蓋 `build-claude` 與 `build-scripts`）。
 - [`build-claude.ts`](./build-claude.md) — 合併 `plugins/common` 與各 plugin 配置，輸出到各專案 `.claude/`。
 - [`build-scripts.ts`](./build-scripts.md) — 以 rolldown 編譯 plugin scripts 並部署至 `~/.ccf/<plugin>-scripts/`。
-- [`claude.ts`](./claude.md) — 於指定專案目錄喚醒 `claude` CLI；`update` 子命令會升級 Claude Code 本體。
+- [`claude-cli.ts`](./claude-cli.md) — 於指定專案目錄喚醒 `claude` CLI；`update` 子命令會升級 Claude Code 本體。
+- [`claude-desktop.ts`](./claude-desktop.md) — 啟動 Claude Desktop 桌面應用（Windows）。
 - [`git-pull.ts`](./git-pull.md) — 以 token 認證 pull 本專案，回報是否有 scripts 變動（透過 exit code）。
 - [`update.ts`](./update.md) — `ccf update` 主流程：git-pull → deps → deploy。
 - [`open.ts`](./open.md) — 以指定編輯器開啟專案目錄，支援多 editor fallback。
