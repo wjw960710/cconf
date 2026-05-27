@@ -9,8 +9,8 @@
     "update": "tsx scripts/update.ts",
     "deps": "pnpm install",
     "deploy": "tsx scripts/build-all.ts",
-    "link": "pnpm link --global",
-    "unlink": "pnpm unlink --global",
+    "link": "pnpm link --global && pnpm link --global",
+    "unlink": "pnpm rm -g cconf",
     "open": "tsx scripts/open.ts",
     "claude": "tsx scripts/claude.ts"
   },
