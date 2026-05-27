@@ -71,13 +71,16 @@ function run(cmd, args) {
 
 function printHelp() {
 	const label = (n, c) => c?.alias ? `${n}, ${c.alias}` : n
-	const width = Math.max(8, ...Object.entries(commands).map(([n, c]) => label(n, c).length))
+	const width = Math.max(8, ...Object.entries(commands)
+		.filter(([n]) => !n.startsWith('_'))
+		.map(([n, c]) => label(n, c).length))
 	const pad = ' '.repeat(2 + width + 1)
 	const lines = [
 		'Usage: ccf <command>',
 		'',
 		'Commands:',
 		...Object.entries(commands).flatMap(([n, c]) => {
+			if (n.startsWith('_')) return []
 			const [first, ...rest] = c.desc.split('\n')
 			return [`  ${label(n, c).padEnd(width)}  ${first}`, ...rest.map(l => pad + l)]
 		}),
