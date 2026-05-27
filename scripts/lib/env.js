@@ -10,7 +10,7 @@ const SENTINEL_ON = '1'
  * @param {import('./env.js').LoadEnvOptions} [options]
  */
 export function loadEnv(options) {
-	const { prefix, mode } = options ?? {}
+	const { prefix, mode = 'development' } = options ?? {}
 	// sentinel 命中代表 parent 已經 loadEnvFile 過；env 透過 spawn 預設繼承，process.env 已是最新狀態
 	if (process.env[SENTINEL] === SENTINEL_ON) {
 		if (prefix) console.log(`[${prefix}] env already loaded, skip`)
