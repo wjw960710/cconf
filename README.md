@@ -13,17 +13,18 @@ claude
 > 安裝專案並配置與分發 AI 配置到各專案
 
 ```shell
-pnpm run deps      # 安裝專案依賴
-cp .env .env.local # 新增 .env.local 並配置
-pnpm run deploy    # 部屬 AI 配置到各專案
+pnpm run deps                  # 安裝專案依賴
+cp .env .env.development.local # 新增並配置 (不敏感配這，AI 默認讀取的 env 檔案)
+cp .env .env.local             # 新增並配置 (敏感資訊配這，該檔有配置 DENY 權限)
+pnpm run deploy                # 部屬 AI 配置到各專案
 ```
 
 > (可選) 添加全局鏈接指令
 
 ```shell
 pnpm setup    # (若沒有初始化過再執行) 初始化 pnpm 全局配置，運行後重啟終端 
-pnpm run link # 建立全局 cc 指令
-cc            # 查看是否能運行，成功的話會有 help 說明
+pnpm run link # 建立全局 ccf 指令
+ccf            # 查看是否能運行，成功的話會有 help 說明
 ```
 
 ---

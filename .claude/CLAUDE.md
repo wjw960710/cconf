@@ -1,7 +1,7 @@
 專案資訊
 ===
 
-本專案為 Claude Code 的 AI 配置中心，集中管理多個子專案的 plugin、command、skill、hook 等配置，並透過 `cc` CLI 部署到各專案。
+本專案為 Claude Code 的 AI 配置中心，集中管理多個子專案的 plugin、command、skill、hook 等配置，並透過 `ccf` CLI 部署到各專案。
 
 ## 通用規則
 
@@ -16,8 +16,8 @@
 
 ## 重要的目錄與檔案結構
 
-- `bin/` — CLI 入口（`cc.mjs`），對應 `package.json` 的 bin 設定，供全局 `pnpm run link` 後使用。
-- `scripts/` — TypeScript 腳本，提供 `cc` 各子指令的實作。
+- `bin/` — CLI 入口（`ccf.mjs`），對應 `package.json` 的 bin 設定，供全局 `pnpm run link` 後使用。
+- `scripts/` — TypeScript 腳本，提供 `ccf` 各子指令的實作。
   - 查看 / 修改本目錄下任一腳本前，先讀 `scripts/CATALOG.md`（總覽索引）快速定位；需要詳細說明再讀該腳本的同名 `.md`（例：`build-claude.ts` ↔ `build-claude.md`，`lib/env.js` ↔ `lib/env.md`）。
   - **同步規則**：每個 `.ts` / `.js` 都對應一份同名 `.md`（型別宣告檔 `*.d.ts` 除外）。新增 / 重命名 / 刪除腳本時，必須同步建立 / 改名 / 刪除對應的 `.md` 並更新 `CATALOG.md`；修改腳本邏輯時也需同步更新對應 `.md`，確保描述與實作一致。
 - `plugins/` — Claude Code plugin 來源，依專案分組（`common`、`project`、...）
@@ -25,7 +25,14 @@
 - `.env*` — 環境變數設定
 - `README.md` — 用戶的使用說明
 
-## cc scripts 及 Plugin scripts package 安裝規則
+## AI 讀取專案 env 規則
+
+AI 若需要讀取本專案的環境變數，一律讀取以下兩個檔案，並以 `.env` 為基底、`.env.development.local` 覆蓋之：
+
+1. `.env` — 基底設定（共用、可進版控）
+2. `.env.development.local` — 本機開發覆蓋（不進版控，優先級高於 `.env`）
+
+## ccf scripts 及 Plugin scripts package 安裝規則
 
 - 統一在跟目錄使用 `pnpm` 進行安裝，不用到 plugin 目錄下安裝
 - 安裝的 package 採越現代越輕量為原則，若選擇不了可以提供候選的 package 名與簡短說明還有優劣分析讓用戶選擇
@@ -56,6 +63,6 @@ const PROJECT_ROOT = process.env.CLAUDE_PROJECT_DIR ?? process.cwd()
   - 範例：`CLAUDE_PLUGIN_ROOT/skills/api-create/SKILL.md`
 - **引用「其他 plugin」的目錄 / 檔案**：使用 `CLAUDE_PLUGIN_ROOT/../<plugin_name>/**/*`
   - 範例：`CLAUDE_PLUGIN_ROOT/../common/skills/xxx/SKILL.md`
-- **調用某 plugin 部署後的 scripts**：使用 `node ~/.cconf/<plugin_name>-scripts/**/*.js`
-  - 範例：`node ~/.cconf/common-scripts/api-doc/cli.js`
-  - 說明：plugin 內 `scripts/` 目錄會在部署後被放到使用者家目錄 `~/.cconf/<plugin_name>-scripts/`，故統一以此路徑調用。
+- **調用某 plugin 部署後的 scripts**：使用 `node ~/.ccf/<plugin_name>-scripts/**/*.js`
+  - 範例：`node ~/.ccf/common-scripts/api-doc/cli.js`
+  - 說明：plugin 內 `scripts/` 目錄會在部署後被放到使用者家目錄 `~/.ccf/<plugin_name>-scripts/`，故統一以此路徑調用。

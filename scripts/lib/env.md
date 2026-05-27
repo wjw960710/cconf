@@ -25,7 +25,7 @@ lib/env.js
 
 ## 全鏈路只跡一次（sentinel）
 
-為避免 `cc.mjs → spawn → 子腳本` 鏈路上每層都重做檔案 I/O 與日誌，本模組使用環境變數 `AI_CONF_ENV_LOADED` 作為 sentinel：
+為避免 `ccf.mjs → spawn → 子腳本` 鏈路上每層都重做檔案 I/O 與日誌，本模組使用環境變數 `AI_CONF_ENV_LOADED` 作為 sentinel：
 
 - 進入 `loadEnv` 時若 `process.env.AI_CONF_ENV_LOADED === '1'`，印一行 `[<prefix>] env already loaded, skip` 後 early return；無 prefix 則靜默 return。
 - 首次掃描完成（不論是否實際讀到檔）後設定 `AI_CONF_ENV_LOADED=1`。

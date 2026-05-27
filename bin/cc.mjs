@@ -14,7 +14,7 @@ const commands = {
 	update: { alias: 'up', desc: '更新該專案與關聯專案的所有 AI 配置' },
 	install: { alias: 'i', desc: '安裝相依套件', run: args => run('pnpm', ['run', 'deps', ...args]) },
 	deploy: { desc: '部屬 AI 配置到各專案' },
-	unlink: { desc: '移除 cc 全域捷徑' },
+	unlink: { desc: '移除 ccf 全域捷徑' },
 	open: {
 		alias: 'o',
 		desc: [
@@ -53,7 +53,7 @@ function run(cmd, args) {
 		})
 		child.on('exit', code => done(code ?? 1))
 		child.on('error', (err) => {
-			console.error(`[cc] failed to spawn ${cmd}: ${err.message}`)
+			console.error(`[ccf] failed to spawn ${cmd}: ${err.message}`)
 			done(1)
 		})
 	})
@@ -64,7 +64,7 @@ function printHelp() {
 	const width = Math.max(8, ...Object.entries(commands).map(([n, c]) => label(n, c).length))
 	const pad = ' '.repeat(2 + width + 1)
 	const lines = [
-		'Usage: cc <command>',
+		'Usage: ccf <command>',
 		'',
 		'Commands:',
 		...Object.entries(commands).flatMap(([n, c]) => {
@@ -87,7 +87,7 @@ if (!rawArg || rawArg === 'help' || rawArg === '--help' || rawArg === '-h') {
 const arg = aliases[rawArg] ?? rawArg
 const cmd = commands[arg]
 if (!cmd) {
-	console.error(`[cc] unknown command: ${rawArg}\n`)
+	console.error(`[ccf] unknown command: ${rawArg}\n`)
 	printHelp()
 	process.exit(1)
 }

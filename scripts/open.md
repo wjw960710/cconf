@@ -1,7 +1,7 @@
 open.ts
 ===
 
-以指定編輯器開啟某個專案目錄，對應 `cc open` 與 alias `cc o`。
+以指定編輯器開啟某個專案目錄，對應 `ccf open` 與 alias `ccf o`。
 
 - 參數：
   - 第一個非 `-` 參數為「專案 prefix」（小寫前綴匹配 `<PROJECT>_DIR_PATH`），為空或為 `ai` 代表本專案。
