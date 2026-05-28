@@ -30,3 +30,4 @@ scripts 目錄
 - [`lib/env.js`](./lib/env.md) — `.env*` 多層載入封裝（`loadEnv({ prefix?, mode? })`，mode 啟用 4 層 Vite/Next 慣例；全鏈路只讀取一次）。
 - [`lib/exit-codes.ts`](./lib/exit-codes.md) — `scripts/` 之間共用的 exit code 常數定義。
 - [`lib/log.js`](./lib/log.md) — 統一 `[prefix] xxx` 診斷訊息格式（`createLogger(prefix)` 回傳 `{ log, error, warn, info }`）。
+- [`lib/paths.js`](./lib/paths.md) — 共用路徑常數（`PROJECT_ROOT`），取代各腳本各自重複的 `fileURLToPath(import.meta.url)` 推導。

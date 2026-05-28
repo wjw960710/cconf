@@ -1,11 +1,8 @@
 import { spawnSync } from 'node:child_process'
-import { dirname, resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
 import { loadEnv } from '../lib/env.js'
 import { EXIT_NO_NEW_COMMITS } from '../lib/exit-codes.js'
 import { createLogger } from '../lib/log.js'
-
-const root = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..')
+import { PROJECT_ROOT } from '../lib/paths.js'
 
 loadEnv({ prefix: 'git-pull' })
 
@@ -19,7 +16,7 @@ if (!token) {
 
 function git(args: string[], opts: { capture?: boolean } = {}) {
 	return spawnSync('git', args, {
-		cwd: root,
+		cwd: PROJECT_ROOT,
 		stdio: opts.capture ? ['ignore', 'pipe', 'pipe'] : 'inherit',
 		encoding: 'utf8',
 		// 關掉 helper + 不准互動，避免彈窗或 hang

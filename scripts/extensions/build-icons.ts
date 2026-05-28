@@ -1,13 +1,12 @@
 import { existsSync } from 'node:fs'
 import { mkdir, readFile, readdir } from 'node:fs/promises'
-import { dirname, join, resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { join } from 'node:path'
 import sharp from 'sharp'
 import { createLogger } from '../lib/log.js'
+import { PROJECT_ROOT } from '../lib/paths.js'
 
 const log = createLogger('build-extensions')
-const root = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..')
-const extensionsDir = join(root, 'extensions')
+const extensionsDir = join(PROJECT_ROOT, 'extensions')
 const SIZES = [16, 32, 48, 128] as const
 
 async function buildOne(extName: string): Promise<void> {

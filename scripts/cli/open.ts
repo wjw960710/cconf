@@ -1,14 +1,12 @@
 import { spawn, spawnSync } from 'node:child_process'
 import { existsSync, statSync } from 'node:fs'
-import { dirname, resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
 import { loadEnv } from '../lib/env.js'
 import { createLogger } from '../lib/log.js'
+import { PROJECT_ROOT } from '../lib/paths.js'
 
 loadEnv({ prefix: 'open' })
 
 const log = createLogger('open')
-const selfRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..')
 const isWindows = process.platform === 'win32'
 
 function parseEditors(value: string | undefined): string[] {
@@ -24,7 +22,7 @@ const target = (argv.find((a) => !a.startsWith('-')) ?? '').trim().toLowerCase()
 
 function resolveTarget(): { path: string; editors: string[] } {
 	if (!target || target === 'it') {
-		return { path: selfRoot, editors: parseEditors(process.env.OPEN_EDITOR) }
+		return { path: PROJECT_ROOT, editors: parseEditors(process.env.OPEN_EDITOR) }
 	}
 
 	const candidates = Object.keys(process.env)

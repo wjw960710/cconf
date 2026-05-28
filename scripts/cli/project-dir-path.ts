@@ -1,12 +1,11 @@
-import { dirname, resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { resolve } from 'node:path'
 import { loadEnv } from '../lib/env.js'
 import { createLogger } from '../lib/log.js'
+import { PROJECT_ROOT } from '../lib/paths.js'
 
 loadEnv()
 
 const log = createLogger('project-dir-path')
-const selfRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..')
 
 function fail(message: string): never {
 	log.error(message)
@@ -27,7 +26,7 @@ const [rawProject = '', subpath] = argv
 const target = rawProject.trim().toLowerCase()
 
 function resolveProjectDir(): string {
-	if (!target || target === 'it') return selfRoot
+	if (!target || target === 'it') return PROJECT_ROOT
 
 	const candidates = Object.keys(process.env)
 		.filter(k => k.endsWith('_DIR_PATH'))

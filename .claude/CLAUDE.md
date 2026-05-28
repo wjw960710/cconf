@@ -9,6 +9,7 @@
 - 腳本默認使用 tsx 執行
 - 腳本若需輸出「log / 進度 / 警告 / 錯誤訊息」，一律使用 `scripts/lib/log.js` 的 `createLogger(prefix)` 建立 logger 後呼叫 `log` / `info` / `warn` / `error`，`prefix` 帶有意義的識別字（例：子指令名、腳本檔名）。
 - 若腳本的 stdout 是「給呼叫端 / shell 消費的結果輸出」（例：`ccf dac pdp` 輸出實際路徑供 shell 替換），則直接使用 `console.log` 印出純結果，不加 prefix。
+- 每次對話結束前，若本輪有改動到「進版控」的檔案，需依該 session 的實際改動提供一則最適合的 commit 訊息建議給用戶，格式採經典 Conventional Commits（`feat: …` / `fix: …` / `refactor: …` / `docs: …` / `chore: …` 等，可帶 scope）。僅提供建議，不自動執行 `git commit` 或 `git add`。
 
 ## 專案使用的技術
 

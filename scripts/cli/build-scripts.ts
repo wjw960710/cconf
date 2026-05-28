@@ -1,15 +1,14 @@
 import { existsSync } from 'node:fs'
 import { mkdir, readdir, rm, symlink, writeFile } from 'node:fs/promises'
 import { homedir } from 'node:os'
-import { dirname, join, relative, resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { join, relative } from 'node:path'
 import { rolldown } from 'rolldown'
 import { createLogger } from '../lib/log.js'
+import { PROJECT_ROOT } from '../lib/paths.js'
 
 const log = createLogger('build-scripts')
-const root = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..')
-const pluginsDir = join(root, 'plugins')
-const nodeModulesDir = join(root, 'node_modules')
+const pluginsDir = join(PROJECT_ROOT, 'plugins')
+const nodeModulesDir = join(PROJECT_ROOT, 'node_modules')
 const distRoot = join(homedir(), '.ccf')
 
 async function walkTs(dir: string): Promise<string[]> {

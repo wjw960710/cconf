@@ -1,16 +1,14 @@
 import { spawnSync } from 'node:child_process'
-import { dirname, resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
 import { EXIT_NO_NEW_COMMITS } from '../lib/exit-codes.js'
 import { createLogger } from '../lib/log.js'
+import { PROJECT_ROOT } from '../lib/paths.js'
 
 const log = createLogger('update')
-const root = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..')
 const isWin = process.platform === 'win32'
 
 function run(cmd: string, args: string[]) {
 	return spawnSync(cmd, args, {
-		cwd: root,
+		cwd: PROJECT_ROOT,
 		stdio: 'inherit',
 		shell: isWin,
 	})

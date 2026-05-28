@@ -1,9 +1,8 @@
 import { existsSync } from 'node:fs'
-import { dirname, join, resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { join } from 'node:path'
 import { createLogger } from './log.js'
+import { PROJECT_ROOT } from './paths.js'
 
-const root = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..')
 const SENTINEL = 'AI_CONF_ENV_LOADED'
 const SENTINEL_ON = '1'
 
@@ -24,7 +23,7 @@ export function loadEnv(options) {
 		: ['.env.local', '.env']
 	const loadedFrom = []
 	for (const name of envFiles) {
-		const path = join(root, name)
+		const path = join(PROJECT_ROOT, name)
 		if (!existsSync(path)) continue
 		process.loadEnvFile(path)
 		loadedFrom.push(name)

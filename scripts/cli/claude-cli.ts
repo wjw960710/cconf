@@ -1,14 +1,12 @@
 import { spawnSync } from 'node:child_process'
 import { existsSync, statSync } from 'node:fs'
-import { dirname, resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
 import { loadEnv } from '../lib/env.js'
 import { createLogger } from '../lib/log.js'
+import { PROJECT_ROOT } from '../lib/paths.js'
 
 loadEnv({ prefix: 'claude' })
 
 const log = createLogger('claude')
-const selfRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..')
 const isWindows = process.platform === 'win32'
 
 const argv = process.argv.slice(2)
@@ -23,7 +21,7 @@ if (first === 'update') {
 }
 
 function resolveTargetPath(target: string): string {
-	if (!target || target === 'it') return selfRoot
+	if (!target || target === 'it') return PROJECT_ROOT
 
 	const candidates = Object.keys(process.env)
 		.filter((k) => k.endsWith('_DIR_PATH'))
