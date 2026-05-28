@@ -73,7 +73,10 @@ function quote(arg) {
 
 function run(cmd, args) {
 	return new Promise((done) => {
-		const child = spawn(quote(cmd), args.map(quote), {
+		// 將 cmd + args 自行 quote 後拼成單一字串傳給 shell，避免 Node 20+ 的 DEP0190
+		// (shell: true 同時傳 args 陣列會觸發 deprecation warning)
+		const line = [cmd, ...args].map(quote).join(' ')
+		const child = spawn(line, {
 			stdio: 'inherit',
 			cwd: root,
 			shell: true,
