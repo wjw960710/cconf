@@ -63,7 +63,8 @@ const commands = {
 		alias: 'srv',
 		desc: [
 			'啟動最小靜態檔案 server（node:http 零依賴）',
-			'  [dir] [--port=N] [--host=H]  預設 dir=當前目錄, port=11737, host=localhost',
+			'  [dir] [--port=N] [--host=H]  預設 dir=當前目錄, host=CLI_SERVE_HOST|localhost, port=CLI_SERVE_PORT|11737',
+			'                               port 被占用時自動 +1 試到可用 port',
 		].join('\n'),
 	},
 }

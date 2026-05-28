@@ -13,8 +13,16 @@ ccf srv  [dir] [--port=N] [--host=H]
 | 參數 | 預設 | 說明 |
 | --- | --- | --- |
 | `[dir]` | 當前目錄 | 要提供服務的目錄；相對路徑以呼叫者實際 cwd 解析（透過 `CCF_USER_CWD`）。 |
-| `--port`, `-p` | `11737` | 監聽 port，1–65535 整數。 |
-| `--host`, `-h` | `localhost` | 監聽 host。 |
+| `--port`, `-p` | `CLI_SERVE_PORT`（fallback `11737`） | 監聽 port，1–65535 整數。 |
+| `--host`, `-h` | `CLI_SERVE_HOST`（fallback `localhost`） | 監聽 host。 |
+
+## Host / Port 配置與占用回退
+
+- 透過 `loadEnv({ prefix: 'serve' })` 載入 `.env` / `.env.local`。
+- 預設 host / port 從環境變數 `CLI_SERVE_HOST` / `CLI_SERVE_PORT` 讀取（於 `.env` 中設定，預設 `localhost` / `11737`）；port 值非合法整數時 fallback 為 `11737`。
+- CLI 參數 `--host` / `--port` 優先級皆高於環境變數。
+- 啟動時若該 port 已被占用（`EADDRINUSE`），自動嘗試 `+1` 直到找到可用 port；最多重試 100 次，超過則終止並回報錯誤。
+- 每次回退會以 `[serve] port N in use, trying N+1` 提示。
 
 ## 路由規則
 
@@ -33,20 +41,24 @@ ccf srv  [dir] [--port=N] [--host=H]
 
 統一以 `createLogger('serve')` 的 `[serve]` 前綴輸出 log（stdout 不會被當作命令結果消費），每筆請求印 status / method / url / 解析到的檔案。
 
+啟動時的網址列印仿照 vite，依 host 模式輸出 `Local` / `Network` 兩種，網址結尾**不**帶 `/`：
+
+- host = `localhost` / `127.0.0.1` / `::1`：只印 `Local http://localhost:<port>`。
+- host = `0.0.0.0` / `::`（wildcard）：印 `Local` 加上每張非 internal IPv4 介面的 `Network` 行；若找不到對外介面，會印 `Network use --host to expose` 提示。
+- 指定具體 IP：印 `Local http://<host>:<port>`。
+
 ## 範例
 
 ```
 $ ccf serve
 [serve] serving D:\workspace
-[serve] http://localhost:11737/
-
-$ ccf serve experiments/www
-[serve] serving D:\...\cconf\experiments\www
-[serve] http://localhost:11737/
+[serve] Local   http://localhost:11737
 
 $ ccf srv ./public --port=8080 --host=0.0.0.0
 [serve] serving D:\workspace\public
-[serve] http://0.0.0.0:8080/
+[serve] Local   http://localhost:8080
+[serve] Network http://10.0.0.1:8080
+[serve] Network http://10.0.0.2:8080
 ```
 
 ## 結束
