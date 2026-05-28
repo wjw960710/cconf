@@ -6,11 +6,11 @@ project-dir-path.ts
 ## 用法
 
 ```
-ccf project-dir-path <project> [subpath]
-ccf pdp <project> [subpath]
+ccf project-dir-path [project] [subpath]
+ccf pdp [project] [subpath]
 ```
 
-- `<project>`：小寫名稱，對 `process.env` 中所有 `*_DIR_PATH` 鍵以 `startsWith` 匹配（與 `ccf open`、`ccf cc` 同規則）。`ai` 為本專案捷徑。
+- `[project]`：小寫名稱，對 `process.env` 中所有 `*_DIR_PATH` 鍵以 `startsWith` 匹配（與 `ccf open`、`ccf cc` 同規則）。省略或為 `it` 時代表本專案。
 - `[subpath]`：選填，與專案根目錄合併（內部使用 `path.resolve`，因此支援 `../`、子目錄、絕對路徑覆蓋）。
 
 匹配為 0 或 ≥2 時 exit 1 並寫 stderr。
@@ -36,7 +36,10 @@ D:\__d_frank\codes\company\dp-ms-jackpot-admin-client
 $ ccf pdp j ../
 D:\__d_frank\codes\company
 
-$ ccf pdp ai
+$ ccf pdp it
+D:\__d_frank\codes\company\dp-ai-config
+
+$ ccf pdp
 D:\__d_frank\codes\company\dp-ai-config
 ```
 
@@ -44,7 +47,7 @@ D:\__d_frank\codes\company\dp-ai-config
 
 | 情境 | 訊息 |
 | --- | --- |
-| 缺少 / 多餘參數 | 印 usage |
+| 多餘參數（>2） | 印 usage |
 | 沒有任何 `*_DIR_PATH` 鍵以該前綴開頭 | `no project matches "<input>"` |
 | 多個 `*_DIR_PATH` 鍵以該前綴開頭 | `ambiguous "<input>" matches: a, b, c` |
 | 命中的鍵值為空字串 | `<KEY>_DIR_PATH is empty` |

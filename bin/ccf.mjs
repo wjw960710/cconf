@@ -9,7 +9,7 @@ loadEnv()
 
 const log = createLogger('ccf')
 
-const openApps = ['ai', ...Object.keys(process.env)
+const openApps = ['it', ...Object.keys(process.env)
 	.filter(k => k.endsWith('_DIR_PATH') && process.env[k])
 	.map(k => k.slice(0, -'_DIR_PATH'.length).toLowerCase())]
 
@@ -26,7 +26,7 @@ const commands = {
 		desc: [
 			'依 OPEN_EDITOR 順序開啟專案',
 			'  [project] [-n|--new]  選擇要開啟的專案，-n/--new 以新視窗開啟 (僅 vscode 支援)',
-			`  可用專案 (startsWith 匹配，ai=本專案): ${openApps.join(' | ')}`,
+			`  可用專案 (startsWith 匹配，空 / it=本專案): ${openApps.join(' | ')}`,
 		].join('\n'),
 	},
 	'claude-cli': {
@@ -34,8 +34,8 @@ const commands = {
 		desc: [
 			'管理 Claude Code CLI',
 			'  update                更新 Claude Code (winget upgrade Anthropic.ClaudeCode)',
-			'  <project> [args...]   cd 到 <PROJECT>_DIR_PATH 後執行 claude [args...]',
-			`  可用專案 (startsWith 匹配，ai=本專案): ${openApps.join(' | ')}`,
+			'  [project] [args...]   cd 到 <PROJECT>_DIR_PATH 後執行 claude [args...]',
+			`  可用專案 (startsWith 匹配，空 / it=本專案): ${openApps.join(' | ')}`,
 		].join('\n'),
 	},
 	'claude-desktop': {
@@ -49,12 +49,12 @@ const commands = {
 		alias: 'pdp',
 		desc: [
 			'輸出 <PROJECT>_DIR_PATH 的實際路徑（可選擇與子路徑合併）',
-			'  <project> [subpath]   project 為小寫 startsWith 匹配，ai=本專案',
+			'  [project] [subpath]   project 為小寫 startsWith 匹配，空 / it=本專案',
 			'                        subpath 選填，支援 ../、子目錄等（path.resolve 規則）',
 			'                        PowerShell: cd (ccf pdp j)',
 			'                        bash/zsh  : cd "$(ccf pdp j)"',
 			'                        cmd.exe   : for /f "delims=" %i in (\'ccf pdp j\') do cd %i',
-			`  可用專案 (startsWith 匹配，ai=本專案): ${openApps.join(' | ')}`,
+			`  可用專案 (startsWith 匹配，空 / it=本專案): ${openApps.join(' | ')}`,
 		].join('\n'),
 		// pnpm 預設會把 script header 印到 stdout，會污染 (ccf pdp …) 的捕獲值，必須帶 --silent
 		run: args => run('pnpm', ['run', '--silent', 'project-dir-path', ...args]),

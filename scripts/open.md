@@ -4,7 +4,7 @@ open.ts
 以指定編輯器開啟某個專案目錄，對應 `ccf open` 與 alias `ccf o`。
 
 - 參數：
-  - 第一個非 `-` 參數為「專案 prefix」（小寫前綴匹配 `<PROJECT>_DIR_PATH`），為空或為 `ai` 代表本專案。
+  - 第一個非 `-` 參數為「專案 prefix」（小寫前綴匹配 `<PROJECT>_DIR_PATH`），為空或為 `it` 代表本專案。
   - `--new` / `-n` → 嘗試以新視窗開啟（目前僅 VS Code `code -n` 支援；其他編輯器會印出提示）。
 - 目錄解析：
   - 比對到唯一 `<PROJECT>_DIR_PATH` 才繼續；多筆 / 零筆匹配或目錄不存在皆報錯退出。

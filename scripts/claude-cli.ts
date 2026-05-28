@@ -23,7 +23,7 @@ if (first === 'update') {
 }
 
 function resolveTargetPath(target: string): string {
-	if (!target || target === 'ai') return selfRoot
+	if (!target || target === 'it') return selfRoot
 
 	const candidates = Object.keys(process.env)
 		.filter((k) => k.endsWith('_DIR_PATH'))

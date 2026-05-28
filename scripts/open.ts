@@ -23,7 +23,7 @@ const newWindow = argv.includes('--new') || argv.includes('-n')
 const target = (argv.find((a) => !a.startsWith('-')) ?? '').trim().toLowerCase()
 
 function resolveTarget(): { path: string; editors: string[] } {
-	if (!target || target === 'ai') {
+	if (!target || target === 'it') {
 		return { path: selfRoot, editors: parseEditors(process.env.OPEN_EDITOR) }
 	}
 

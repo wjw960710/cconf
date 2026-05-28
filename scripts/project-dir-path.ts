@@ -14,21 +14,20 @@ function fail(message: string): never {
 }
 
 function usage(): never {
-	console.error(`Usage: ccf project-dir-path <project> [subpath]`)
-	console.error(`  <project>: <PROJECT>_DIR_PATH 中的 PROJECT 名稱（小寫，startsWith 匹配；ai=本專案）`)
+	console.error(`Usage: ccf project-dir-path [project] [subpath]`)
+	console.error(`  [project]: <PROJECT>_DIR_PATH 中的 PROJECT 名稱（小寫，startsWith 匹配；空 / it=本專案）`)
 	console.error(`  [subpath]: 選填，與專案根目錄合併輸出（支援 ../、子目錄等）`)
 	process.exit(1)
 }
 
 const argv = process.argv.slice(2)
-if (argv.length === 0 || argv.length > 2) usage()
+if (argv.length > 2) usage()
 
-const [rawProject, subpath] = argv
+const [rawProject = '', subpath] = argv
 const target = rawProject.trim().toLowerCase()
-if (!target) usage()
 
 function resolveProjectDir(): string {
-	if (target === 'ai') return selfRoot
+	if (!target || target === 'it') return selfRoot
 
 	const candidates = Object.keys(process.env)
 		.filter(k => k.endsWith('_DIR_PATH'))
