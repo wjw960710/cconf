@@ -3,8 +3,11 @@ import { spawn } from 'node:child_process'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { loadEnv } from '../scripts/lib/env.js'
+import { createLogger } from '../scripts/lib/log.js'
 
 loadEnv()
+
+const log = createLogger('ccf')
 
 const openApps = ['ai', ...Object.keys(process.env)
 	.filter(k => k.endsWith('_DIR_PATH') && process.env[k])
@@ -77,7 +80,7 @@ function run(cmd, args) {
 		})
 		child.on('exit', code => done(code ?? 1))
 		child.on('error', (err) => {
-			console.error(`[ccf] failed to spawn ${cmd}: ${err.message}`)
+			log.error(`failed to spawn ${cmd}: ${err.message}`)
 			done(1)
 		})
 	})
@@ -114,7 +117,7 @@ if (!rawArg || rawArg === 'help' || rawArg === '--help' || rawArg === '-h') {
 const arg = aliases[rawArg] ?? rawArg
 const cmd = commands[arg]
 if (!cmd) {
-	console.error(`[ccf] unknown command: ${rawArg}\n`)
+	log.error(`unknown command: ${rawArg}\n`)
 	printHelp()
 	process.exit(1)
 }

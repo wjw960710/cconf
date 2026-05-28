@@ -3,9 +3,11 @@ import { existsSync, statSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { loadEnv } from './lib/env.js'
+import { createLogger } from './lib/log.js'
 
 loadEnv({ prefix: 'claude' })
 
+const log = createLogger('claude')
 const selfRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const isWindows = process.platform === 'win32'
 
@@ -29,21 +31,21 @@ function resolveTargetPath(target: string): string {
 		.filter(({ name }) => name.startsWith(target))
 
 	if (candidates.length === 0) {
-		console.error(`[claude] no project matches "${target}"`)
+		log.error(`no project matches "${target}"`)
 		process.exit(1)
 	}
 	if (candidates.length > 1) {
-		console.error(`[claude] ambiguous "${target}" matches: ${candidates.map((c) => c.name).join(', ')}`)
+		log.error(`ambiguous "${target}" matches: ${candidates.map((c) => c.name).join(', ')}`)
 		process.exit(1)
 	}
 
 	const path = process.env[candidates[0].envKey]
 	if (!path) {
-		console.error(`[claude] ${candidates[0].envKey} is empty`)
+		log.error(`${candidates[0].envKey} is empty`)
 		process.exit(1)
 	}
 	if (!existsSync(path) || !statSync(path).isDirectory()) {
-		console.error(`[claude] ${candidates[0].envKey} 目錄不存在: ${path}`)
+		log.error(`${candidates[0].envKey} 目錄不存在: ${path}`)
 		process.exit(1)
 	}
 	return path
@@ -54,7 +56,7 @@ const isProjectArg = target && !target.startsWith('-')
 const cwd = resolveTargetPath(isProjectArg ? target : '')
 const passthrough = isProjectArg ? argv.slice(1) : argv
 
-console.log(`[claude] cwd: ${cwd}`)
+log.log(`cwd: ${cwd}`)
 const result = spawnSync('claude', passthrough, {
 	stdio: 'inherit',
 	shell: isWindows,

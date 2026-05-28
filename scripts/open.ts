@@ -3,9 +3,11 @@ import { existsSync, statSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { loadEnv } from './lib/env.js'
+import { createLogger } from './lib/log.js'
 
 loadEnv({ prefix: 'open' })
 
+const log = createLogger('open')
 const selfRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const isWindows = process.platform === 'win32'
 
@@ -31,22 +33,22 @@ function resolveTarget(): { path: string; editors: string[] } {
 		.filter(({ name }) => name.startsWith(target))
 
 	if (candidates.length === 0) {
-		console.error(`[open] no project matches "${target}"`)
+		log.error(`no project matches "${target}"`)
 		process.exit(1)
 	}
 	if (candidates.length > 1) {
-		console.error(`[open] ambiguous "${target}" matches: ${candidates.map((c) => c.name).join(', ')}`)
+		log.error(`ambiguous "${target}" matches: ${candidates.map((c) => c.name).join(', ')}`)
 		process.exit(1)
 	}
 
 	const { name, envKey } = candidates[0]
 	const path = process.env[envKey]
 	if (!path) {
-		console.error(`[open] ${envKey} is empty`)
+		log.error(`${envKey} is empty`)
 		process.exit(1)
 	}
 	if (!existsSync(path) || !statSync(path).isDirectory()) {
-		console.error(`[open] ${envKey} 目錄不存在: ${path}`)
+		log.error(`${envKey} 目錄不存在: ${path}`)
 		process.exit(1)
 	}
 	const projectEditor = process.env[`${name.toUpperCase()}_OPEN_EDITOR`]?.trim()
@@ -62,17 +64,17 @@ function exists(cmd: string): boolean {
 
 for (const editor of editors) {
 	if (!exists(editor)) {
-		console.log(`[open] ${editor} not found, trying next...`)
+		log.log(`${editor} not found, trying next...`)
 		continue
 	}
 	const args = newWindow && editor === 'code' ? ['-n', openPath] : [openPath]
 	if (newWindow && editor !== 'code') {
-		console.log(`[open] note: ${editor} 不支援 CLI --new-window，請於 IDE 設定 "Open project in" 為 New window`)
+		log.log(`note: ${editor} 不支援 CLI --new-window，請於 IDE 設定 "Open project in" 為 New window`)
 	}
-	console.log(`[open] launching ${editor} ${args.join(' ')}`)
+	log.log(`launching ${editor} ${args.join(' ')}`)
 	spawn(editor, args, { detached: true, stdio: 'ignore', shell: isWindows }).unref()
 	process.exit(0)
 }
 
-console.error(`[open] no editor found (tried: ${editors.join(', ')})`)
+log.error(`no editor found (tried: ${editors.join(', ')})`)
 process.exit(1)

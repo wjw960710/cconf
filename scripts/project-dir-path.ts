@@ -1,14 +1,15 @@
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { loadEnv } from './lib/env.js'
+import { createLogger } from './lib/log.js'
 
 loadEnv()
 
-const TAG = '[project-dir-path]'
+const log = createLogger('project-dir-path')
 const selfRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 
 function fail(message: string): never {
-	console.error(`${TAG} ${message}`)
+	log.error(message)
 	process.exit(1)
 }
 

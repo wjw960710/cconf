@@ -16,3 +16,4 @@ scripts 目錄
 - [`project-dir-path.ts`](./project-dir-path.md) — 解析 `<PROJECT>_DIR_PATH` 並輸出實際路徑（可合併子路徑），給 shell 用作 `cd (ccf pdp …)` 的參數來源。
 - [`lib/env.js`](./lib/env.md) — `.env*` 多層載入封裝（`loadEnv({ prefix?, mode? })`，mode 啟用 4 層 Vite/Next 慣例；全鏈路只讀取一次）。
 - [`lib/exit-codes.ts`](./lib/exit-codes.md) — `scripts/` 之間共用的 exit code 常數定義。
+- [`lib/log.js`](./lib/log.md) — 統一 `[prefix] xxx` 診斷訊息格式（`createLogger(prefix)` 回傳 `{ log, error, warn, info }`）。

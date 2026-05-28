@@ -4,7 +4,9 @@ import { homedir } from 'node:os'
 import { dirname, join, relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { rolldown } from 'rolldown'
+import { createLogger } from './lib/log.js'
 
+const log = createLogger('build-scripts')
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const pluginsDir = join(root, 'plugins')
 const nodeModulesDir = join(root, 'node_modules')
@@ -50,9 +52,9 @@ for (const plugin of plugins) {
 		})
 		await bundle.write({ file: outFile, format: 'esm', sourcemap: true, minify: true })
 		await bundle.close()
-		console.log(`[build-scripts] ${plugin}/${rel.replace(/\\/g, '/')}`)
+		log.log(`${plugin}/${rel.replace(/\\/g, '/')}`)
 		built++
 	}
 }
 
-console.log(`[build-scripts] done (${built} file(s))`)
+log.log(`done (${built} file(s))`)

@@ -3,7 +3,9 @@ import { copyFile, mkdir, readFile, readdir, writeFile } from 'node:fs/promises'
 import { dirname, extname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { loadEnv } from './lib/env.js'
+import { createLogger } from './lib/log.js'
 
+const log = createLogger('build-claude')
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const pluginsDir = join(root, 'plugins')
 
@@ -64,11 +66,11 @@ for (const plugin of plugins) {
 	const envKey = `${plugin.toUpperCase()}_DIR_PATH`
 	const target = process.env[envKey]
 	if (!target) {
-		console.log(`[build-claude] ${plugin}: ${envKey} not set, skip`)
+		log.log(`${plugin}: ${envKey} not set, skip`)
 		continue
 	}
 	if (!existsSync(target)) {
-		console.log(`[build-claude] ${plugin}: ${envKey}=${target} not found, skip`)
+		log.log(`${plugin}: ${envKey}=${target} not found, skip`)
 		continue
 	}
 
@@ -88,16 +90,16 @@ for (const plugin of plugins) {
 		const override = pluginJsonByName.get(name)
 		const merged = base === undefined ? override : override === undefined ? base : deepMerge(base, override)
 		await writeFile(join(outDir, name), `${JSON.stringify(merged, null, 2)}\n`)
-		console.log(`[build-claude] ${plugin}/.claude/${name}`)
+		log.log(`${plugin}/.claude/${name}`)
 		written++
 	}
 
 	for (const f of pluginFiles) {
 		if (f.ext === '.json') continue
 		await copyFile(f.path, join(outDir, f.name))
-		console.log(`[build-claude] ${plugin}/.claude/${f.name}`)
+		log.log(`${plugin}/.claude/${f.name}`)
 		written++
 	}
 }
 
-console.log(`[build-claude] done (${written} file(s))`)
+log.log(`done (${written} file(s))`)
