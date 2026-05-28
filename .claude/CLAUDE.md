@@ -7,6 +7,8 @@
 
 - 腳本默認使用 Typescript 撰寫
 - 腳本默認使用 tsx 執行
+- 腳本若需輸出「log / 進度 / 警告 / 錯誤訊息」，一律使用 `scripts/lib/log.js` 的 `createLogger(prefix)` 建立 logger 後呼叫 `log` / `info` / `warn` / `error`，`prefix` 帶有意義的識別字（例：子指令名、腳本檔名）。
+- 若腳本的 stdout 是「給呼叫端 / shell 消費的結果輸出」（例：`ccf dac pdp` 輸出實際路徑供 shell 替換），則直接使用 `console.log` 印出純結果，不加 prefix。
 
 ## 專案使用的技術
 
@@ -24,6 +26,7 @@
   - `scripts/` — plugin 專屬腳本一律使用 ts 寫在該目錄
 - `.env*` — 環境變數設定
 - `README.md` — 用戶的使用說明
+- `experiments/` — 未進版控的 scratch / playground 腳本目錄（見 `.gitignore` 排除規則），用於暫時性實驗、概念驗證、一次性腳本；正式功能（會被 `ccf` 或 plugin 使用）不應放在此目錄，應移至 `scripts/` 或對應 plugin 的 `scripts/` 下。
 
 ## AI 讀取專案 env 規則
 
