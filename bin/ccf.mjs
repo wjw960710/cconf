@@ -42,6 +42,20 @@ const commands = {
 			'  [args...]             透傳參數給 claude.exe',
 		].join('\n'),
 	},
+	'project-dir-path': {
+		alias: 'pdp',
+		desc: [
+			'輸出 <PROJECT>_DIR_PATH 的實際路徑（可選擇與子路徑合併）',
+			'  <project> [subpath]   project 為小寫 startsWith 匹配，ai=本專案',
+			'                        subpath 選填，支援 ../、子目錄等（path.resolve 規則）',
+			'                        PowerShell: cd (ccf pdp j)',
+			'                        bash/zsh  : cd "$(ccf pdp j)"',
+			'                        cmd.exe   : for /f "delims=" %i in (\'ccf pdp j\') do cd %i',
+			`  可用專案 (startsWith 匹配，ai=本專案): ${openApps.join(' | ')}`,
+		].join('\n'),
+		// pnpm 預設會把 script header 印到 stdout，會污染 (ccf pdp …) 的捕獲值，必須帶 --silent
+		run: args => run('pnpm', ['run', '--silent', 'project-dir-path', ...args]),
+	},
 }
 const aliases = Object.fromEntries(
 	Object.entries(commands).flatMap(([n, c]) => (c.alias ? [[c.alias, n]] : [])),

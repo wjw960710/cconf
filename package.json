@@ -13,7 +13,8 @@
     "unlink": "pnpm rm -g cconf",
     "open": "tsx scripts/open.ts",
     "claude-cli": "tsx scripts/claude-cli.ts",
-    "claude-desktop": "tsx scripts/claude-desktop.ts"
+    "claude-desktop": "tsx scripts/claude-desktop.ts",
+    "project-dir-path": "tsx scripts/project-dir-path.ts"
   },
   "devDependencies": {
     "@types/node": "^25.9.1",
