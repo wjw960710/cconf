@@ -31,16 +31,16 @@ cd "$(ccf pdp j)"         # bash / zsh
 
 ```
 $ ccf pdp j
-D:\__d_frank\codes\company\dp-ms-jackpot-admin-client
+D:\proj\jackpot-client
 
 $ ccf pdp j ../
-D:\__d_frank\codes\company
+D:\proj
 
 $ ccf pdp it
-D:\__d_frank\codes\company\dp-ai-config
+D:\proj\cconf
 
 $ ccf pdp
-D:\__d_frank\codes\company\dp-ai-config
+D:\proj\cconf
 ```
 
 ## 錯誤情境
