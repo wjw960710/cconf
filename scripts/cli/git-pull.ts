@@ -1,11 +1,11 @@
 import { spawnSync } from 'node:child_process'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { loadEnv } from './lib/env.js'
-import { EXIT_NO_NEW_COMMITS } from './lib/exit-codes.js'
-import { createLogger } from './lib/log.js'
+import { loadEnv } from '../lib/env.js'
+import { EXIT_NO_NEW_COMMITS } from '../lib/exit-codes.js'
+import { createLogger } from '../lib/log.js'
 
-const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
+const root = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..')
 
 loadEnv({ prefix: 'git-pull' })
 

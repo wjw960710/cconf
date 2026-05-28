@@ -1,11 +1,11 @@
 import { spawnSync } from 'node:child_process'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { EXIT_NO_NEW_COMMITS } from './lib/exit-codes.js'
-import { createLogger } from './lib/log.js'
+import { EXIT_NO_NEW_COMMITS } from '../lib/exit-codes.js'
+import { createLogger } from '../lib/log.js'
 
 const log = createLogger('update')
-const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
+const root = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..')
 const isWin = process.platform === 'win32'
 
 function run(cmd: string, args: string[]) {
@@ -16,7 +16,7 @@ function run(cmd: string, args: string[]) {
 	})
 }
 
-const pullRes = run('tsx', ['scripts/git-pull.ts'])
+const pullRes = run('tsx', ['scripts/cli/git-pull.ts'])
 if (pullRes.error) {
 	log.error(`failed to run git-pull (${pullRes.error.message})`)
 	process.exit(1)

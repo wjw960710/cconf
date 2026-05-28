@@ -2,13 +2,13 @@ import { spawn, spawnSync } from 'node:child_process'
 import { existsSync, statSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { loadEnv } from './lib/env.js'
-import { createLogger } from './lib/log.js'
+import { loadEnv } from '../lib/env.js'
+import { createLogger } from '../lib/log.js'
 
 loadEnv({ prefix: 'open' })
 
 const log = createLogger('open')
-const selfRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
+const selfRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..')
 const isWindows = process.platform === 'win32'
 
 function parseEditors(value: string | undefined): string[] {

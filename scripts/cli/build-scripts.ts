@@ -4,10 +4,10 @@ import { homedir } from 'node:os'
 import { dirname, join, relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { rolldown } from 'rolldown'
-import { createLogger } from './lib/log.js'
+import { createLogger } from '../lib/log.js'
 
 const log = createLogger('build-scripts')
-const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
+const root = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..')
 const pluginsDir = join(root, 'plugins')
 const nodeModulesDir = join(root, 'node_modules')
 const distRoot = join(homedir(), '.ccf')

@@ -1,12 +1,12 @@
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { loadEnv } from './lib/env.js'
-import { createLogger } from './lib/log.js'
+import { loadEnv } from '../lib/env.js'
+import { createLogger } from '../lib/log.js'
 
 loadEnv()
 
 const log = createLogger('project-dir-path')
-const selfRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
+const selfRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..')
 
 function fail(message: string): never {
 	log.error(message)

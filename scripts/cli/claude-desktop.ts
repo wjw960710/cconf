@@ -1,7 +1,7 @@
 import { spawn } from 'node:child_process'
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
-import { createLogger } from './lib/log.js'
+import { createLogger } from '../lib/log.js'
 
 const log = createLogger('claude-desktop')
 const isWindows = process.platform === 'win32'

@@ -2,11 +2,11 @@ import { existsSync } from 'node:fs'
 import { copyFile, mkdir, readFile, readdir, writeFile } from 'node:fs/promises'
 import { dirname, extname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { loadEnv } from './lib/env.js'
-import { createLogger } from './lib/log.js'
+import { loadEnv } from '../lib/env.js'
+import { createLogger } from '../lib/log.js'
 
 const log = createLogger('build-claude')
-const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
+const root = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..')
 const pluginsDir = join(root, 'plugins')
 
 const supportedExts = ['.json', '.md']

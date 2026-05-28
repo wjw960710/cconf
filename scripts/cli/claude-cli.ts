@@ -2,13 +2,13 @@ import { spawnSync } from 'node:child_process'
 import { existsSync, statSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { loadEnv } from './lib/env.js'
-import { createLogger } from './lib/log.js'
+import { loadEnv } from '../lib/env.js'
+import { createLogger } from '../lib/log.js'
 
 loadEnv({ prefix: 'claude' })
 
 const log = createLogger('claude')
-const selfRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
+const selfRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..')
 const isWindows = process.platform === 'win32'
 
 const argv = process.argv.slice(2)
