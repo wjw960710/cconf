@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Bird Icon · Forest Emerald",
+  "version": "0.0.1",
+  "description": "Bird icon variant (emerald) for visibility testing on light/dark Chrome themes.",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "action": {
+    "default_title": "Bird (Forest Emerald)",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  }
+}
