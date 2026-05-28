@@ -15,6 +15,7 @@
     "claude-cli": "tsx scripts/cli/claude-cli.ts",
     "claude-desktop": "tsx scripts/cli/claude-desktop.ts",
     "project-dir-path": "tsx scripts/cli/project-dir-path.ts",
+    "serve": "tsx scripts/cli/serve.ts",
     "build-extensions": "tsx scripts/extensions/build-icons.ts"
   },
   "devDependencies": {

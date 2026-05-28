@@ -59,6 +59,13 @@ const commands = {
 		// pnpm 預設會把 script header 印到 stdout，會污染 (ccf pdp …) 的捕獲值，必須帶 --silent
 		run: args => run('pnpm', ['run', '--silent', 'project-dir-path', ...args]),
 	},
+	serve: {
+		alias: 'srv',
+		desc: [
+			'啟動最小靜態檔案 server（node:http 零依賴）',
+			'  [dir] [--port=N] [--host=H]  預設 dir=當前目錄, port=11737, host=localhost',
+		].join('\n'),
+	},
 }
 const aliases = Object.fromEntries(
 	Object.entries(commands).flatMap(([n, c]) => (c.alias ? [[c.alias, n]] : [])),
@@ -71,6 +78,10 @@ function quote(arg) {
 	return isWin && /[\s"]/.test(arg) ? `"${arg.replace(/"/g, '\\"')}"` : arg
 }
 
+// 子腳本 cwd 會被設成 root，原始呼叫目錄會遺失。以 CCF_USER_CWD 帶過去，
+// 讓需要「呼叫者目前所在目錄」的子指令（例：ccf serve [dir]）能正確解析相對路徑。
+const userCwd = process.cwd()
+
 function run(cmd, args) {
 	return new Promise((done) => {
 		// 將 cmd + args 自行 quote 後拼成單一字串傳給 shell，避免 Node 20+ 的 DEP0190
@@ -80,6 +91,7 @@ function run(cmd, args) {
 			stdio: 'inherit',
 			cwd: root,
 			shell: true,
+			env: { ...process.env, CCF_USER_CWD: userCwd },
 		})
 		child.on('exit', code => done(code ?? 1))
 		child.on('error', (err) => {

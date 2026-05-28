@@ -20,6 +20,7 @@ scripts 目錄
 - [`cli/update.ts`](./cli/update.md) — `ccf update` 主流程：git-pull → deps → deploy。
 - [`cli/open.ts`](./cli/open.md) — 以指定編輯器開啟專案目錄，支援多 editor fallback。
 - [`cli/project-dir-path.ts`](./cli/project-dir-path.md) — 解析 `<PROJECT>_DIR_PATH` 並輸出實際路徑（可合併子路徑），給 shell 用作 `cd (ccf pdp …)` 的參數來源。
+- [`cli/serve.ts`](./cli/serve.md) — 以 `node:http` 啟動最小靜態檔案 server，支援 `[dir]` / `--port` / `--host`，預設服務當前目錄於 `localhost:11737`。
 
 ## extensions/
 
