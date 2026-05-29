@@ -79,7 +79,7 @@ function quote(arg) {
 	return isWin && /[\s"]/.test(arg) ? `"${arg.replace(/"/g, '\\"')}"` : arg
 }
 
-// 子腳本 cwd 會被設成 root，原始呼叫目錄會遺失。以 CCF_USER_CWD 帶過去，
+// 子腳本 cwd 會被設成 root，原始呼叫目錄會遺失。以 CLI_SERVE_USER_CWD 帶過去，
 // 讓需要「呼叫者目前所在目錄」的子指令（例：ccf serve [dir]）能正確解析相對路徑。
 const userCwd = process.cwd()
 
@@ -92,7 +92,7 @@ function run(cmd, args) {
 			stdio: 'inherit',
 			cwd: root,
 			shell: true,
-			env: { ...process.env, CCF_USER_CWD: userCwd },
+			env: { ...process.env, CLI_SERVE_USER_CWD: userCwd },
 		})
 		child.on('exit', code => done(code ?? 1))
 		child.on('error', (err) => {

@@ -78,7 +78,7 @@ function parseArgs(argv: string[]): Options {
 		}
 	}
 
-	const userCwd = process.env.CCF_USER_CWD ?? process.cwd()
+	const userCwd = process.env.CLI_SERVE_USER_CWD ?? process.cwd()
 	const resolvedDir = dir === undefined
 		? userCwd
 		: (isAbsolute(dir) ? resolve(dir) : resolve(userCwd, dir))

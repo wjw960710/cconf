@@ -12,7 +12,7 @@ ccf srv  [dir] [--port=N] [--host=H]
 
 | 參數 | 預設 | 說明 |
 | --- | --- | --- |
-| `[dir]` | 當前目錄 | 要提供服務的目錄；相對路徑以呼叫者實際 cwd 解析（透過 `CCF_USER_CWD`）。 |
+| `[dir]` | 當前目錄 | 要提供服務的目錄；相對路徑以呼叫者實際 cwd 解析（透過 `CLI_SERVE_USER_CWD`）。 |
 | `--port`, `-p` | `CLI_SERVE_PORT`（fallback `11737`） | 監聽 port，1–65535 整數。 |
 | `--host`, `-h` | `CLI_SERVE_HOST`（fallback `localhost`） | 監聽 host。 |
 
@@ -72,6 +72,6 @@ $ ccf srv ./public --port=8080 --host=0.0.0.0
 
 ## 相關檔案
 
-- `bin/ccf.mjs` — 子指令註冊；注入 `CCF_USER_CWD` 讓相對路徑能對應呼叫者實際 cwd。
+- `bin/ccf.mjs` — 子指令註冊；注入 `CLI_SERVE_USER_CWD` 讓相對路徑能對應呼叫者實際 cwd。
 - `package.json` `scripts.serve` — 透過 tsx 執行入口。
 - `scripts/lib/log.js` — `[serve]` log 前綴來源。
