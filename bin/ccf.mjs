@@ -62,9 +62,12 @@ const commands = {
 	serve: {
 		alias: 'srv',
 		desc: [
-			'啟動最小靜態檔案 server（node:http 零依賴）',
+			'啟動最小靜態檔案 server（node:http / node:https）',
 			'  [dir] [--port=N] [--host=H]  預設 dir=當前目錄, host=CLI_SERVE_HOST|localhost, port=CLI_SERVE_PORT|11737',
 			'                               port 被占用時自動 +1 試到可用 port',
+			'  --https                      啟用 HTTPS；未帶 --cert/--key 時自動產生 self-signed 憑證',
+			'  --cert <path> --key <path>   搭配 --https 載入指定憑證 / 私鑰（兩者需同時帶）',
+			'  serve.config.{ts,js,mjs,cjs,json}  自動探查（cwd → [dir]），可設定 vite 風格 server.proxy',
 		].join('\n'),
 	},
 }

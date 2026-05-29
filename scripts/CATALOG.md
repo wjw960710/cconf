@@ -20,7 +20,7 @@ scripts 目錄
 - [`cli/update.ts`](./cli/update.md) — `ccf update` 主流程：git-pull → deps → deploy。
 - [`cli/open.ts`](./cli/open.md) — 以指定編輯器開啟專案目錄，支援多 editor fallback。
 - [`cli/project-dir-path.ts`](./cli/project-dir-path.md) — 解析 `<PROJECT>_DIR_PATH` 並輸出實際路徑（可合併子路徑），給 shell 用作 `cd (ccf pdp …)` 的參數來源。
-- [`cli/serve.ts`](./cli/serve.md) — 以 `node:http` 啟動最小靜態檔案 server，支援 `[dir]` / `--port` / `--host`；預設 port 取自 `CLI_SERVE_PORT`（fallback `11737`），占用時自動 `+1` 回退。
+- [`cli/serve.ts`](./cli/serve.md) — 以 `node:http` / `node:https` 啟動最小靜態檔案 server，支援 `[dir]` / `--port` / `--host` / `--https` / `--cert` / `--key`；預設 port 取自 `CLI_SERVE_PORT`（fallback `11737`），占用時自動 `+1` 回退；`--https` 預設用 `selfsigned` 自動產生 self-signed 憑證；自動探查 `serve.config.{ts,js,mjs,cjs,json}` 載入 vite 風格 `server.proxy`（基於 `http-proxy-3`，支援 changeOrigin / secure / ws / rewrite / RegExp key）。
 
 ## extensions/
 
